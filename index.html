@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>CHIẾN TRICKER HUB</title>
+    <title>Ma Nhật Trường</title>
     
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#000000">
@@ -65,16 +65,16 @@
 
     <div class="desktop">
         <div class="app-icon" onclick="openWin('win1')">
-            <div class="icon-box icon-1">01</div>
-            <span>Xâm Nhập</span>
+            <div class="icon-box icon-1">Dame Facebook</div>
+            <span>Chức năng 1</span>
         </div>
         <div class="app-icon" onclick="openWin('win2')">
-            <div class="icon-box icon-2">02</div>
-            <span>Tấn Công</span>
+            <div class="icon-box icon-2">DDoS Web</div>
+            <span>Chức năng 2</span>
         </div>
         <div class="app-icon" onclick="openWin('win3')">
-            <div class="icon-box icon-3">03</div>
-            <span>Admin</span>
+            <div class="icon-box icon-3">Admin</div>
+            <span>Thông tin</span>
         </div>
     </div>
 
@@ -105,7 +105,7 @@
         <div class="win-content">
             <div style="border: 1px solid var(--neon-green); padding: 20px; background: rgba(0,255,0,0.05);">
                 <h2 style="margin-top:0;">MA NHẬT TRƯỜNG</h2>
-                <p>Status: [ ONLINE ]</p><p>Role: System Founder</p><p>Level: God Mode</p>
+                <p>Status: [ ONLINE ]</p><p>Telegram: ma_nhat_truong </p><p>Level: God Mode</p>
             </div>
         </div>
     </div>
@@ -117,9 +117,20 @@
         }, 1000);
 
         const codeLines = {
-            1: [">> [SYSTEM] Đang giải mã module 01...", ">> [EXPLOIT] Injecting payload v3.1...", ">> [SUCCESS] Đã chiếm quyền điều khiển!"],
-            2: [">> [DDOS] Khởi tạo 500 threads tấn công...", ">> [NETWORK] Sending ACK/SYN flood...", ">> [STATUS] Server mục tiêu đã sập!"]
+            1: [">> Report Thành Công", ">> Bật Chống Spam", ">> Đổi Tài Khoảng..."],
+            2: [
+                "root@Ma Nhat Truong:~# ./layer7_strike --target $URL --threads $THREADS",
+                "[+] Resolving target hostname to IPv4 address... [OK]",
+                "[+] Bypassing WAF (Web Application Firewall) protections... [SUCCESS]",
+                "[*] Spawning concurrent workers. Active threads: 50,000.",
+                "[*] Initiating HTTP/2 multiplexing POST flood...",
+                "[!] Payload delivery rate: 3.2M req/sec | Traffic: 125 Gbps",
+                "[!] Target response time spiking: 204ms -> 5048ms -> CONNECTION_TIMEOUT",
+                "[-] Target server dropped connection. HTTP Status: 503 Service Unavailable",
+                "[+] Target completely offline. Zero packets received. Operation successful."
+            ]
         };
+
 
         let activeIntervals = {};
         function openWin(id) { document.getElementById(id).classList.add('active'); }
