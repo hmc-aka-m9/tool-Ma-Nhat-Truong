@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacker Tool - Coder: Ma Nhật Trường</title>
+    <style>
+        /* CSS thiết kế giao diện chuẩn Hacker Lỏ */
+        body {
+            background-color: #050505;
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        .container {
+            border: 2px solid #00ff00;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+            padding: 30px;
+            max-width: 600px;
+            margin: 40px auto;
+            background: rgba(0, 20, 0, 0.8);
+            border-radius: 5px;
+        }
+        h1, h2 { 
+            text-shadow: 0 0 10px #00ff00; 
+            margin-bottom: 20px;
+        }
+        p.guide {
+            color: #00cc00;
+            font-size: 14px;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed #00ff00;
+            padding-bottom: 10px;
+        }
+        button {
+            background-color: #000;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 12px 25px;
+            margin: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+        button:hover {
+            background-color: #00ff00;
+            color: #000;
+            box-shadow: 0 0 15px #00ff00;
+        }
+        input {
+            background-color: #000;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            margin: 8px 0;
+            width: 85%;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 15px;
+        }
+        input:focus { 
+            outline: none; 
+            box-shadow: 0 0 10px #00ff00; 
+            background-color: #0a1a0a;
+        }
+        
+        /* Ẩn hiện các chức năng */
+        .section { display: none; }
+        .active { display: block; animation: fadeIn 0.5s; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Giao diện chạy code */
+        #terminal {
+            text-align: left;
+            background: #000;
+            padding: 15px;
+            border: 1px dotted #00ff00;
+            height: 300px;
+            overflow-y: auto;
+            font-size: 13px;
+            box-shadow: inset 0 0 10px #00ff00;
+        }
+        
+        /* Bảng Admin */
+        .admin-box {
+            border: 1px dashed #00ff00;
+            padding: 20px;
+            margin-top: 20px;
+            background: rgba(0, 255, 0, 0.05);
+        }
+        .admin-name {
+            color: #fff; 
+            text-shadow: 0 0 10px #fff, 0 0 20px #00ff00;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="menu" class="section active">
+            <h1>[ ROOT TERMINAL ]</h1>
+            <p>> Lựa chọn module để thực thi:</p>
+            <button onclick="showSection('func1')">Chức năng 1</button><br>
+            <button onclick="showSection('func2')">Chức năng 2</button><br>
+            <button onclick="showSection('func3')">Thông tin Admin</button>
+        </div>
+
+        <div id="func1" class="section">
+            <h2>> MODULE 01</h2>
+            <p class="guide">Hướng dẫn: Nhập địa chỉ mục tiêu, cổng kết nối và mã khóa để tiến hành xâm nhập hệ thống.</p>
+            <input type="text" placeholder="Nhập Target IP / ID..."><br>
+            <input type="text" placeholder="Nhập Port / Payload..."><br>
+            <input type="text" placeholder="Nhập Token ẩn danh..."><br>
+            <button onclick="startHack()">[ BẮT ĐẦU CHẠY ]</button><br>
+            <button onclick="showSection('menu')" style="font-size: 12px; padding: 5px 10px;"><< Quay lại</button>
+        </div>
+
+        <div id="func2" class="section">
+            <h2>> MODULE 02</h2>
+            <p class="guide">Hướng dẫn: Cấu hình luồng tấn công từ chối dịch vụ (DDoS) vào máy chủ mục tiêu.</p>
+            <input type="text" placeholder="Nhập URL Target..."><br>
+            <input type="text" placeholder="Nhập số lượng Threads..."><br>
+            <button onclick="startHack()">[ BẮT ĐẦU CHẠY ]</button><br>
+            <button onclick="showSection('menu')" style="font-size: 12px; padding: 5px 10px;"><< Quay lại</button>
+        </div>
+
+        <div id="func3" class="section">
+            <h2>> SYSTEM ADMIN</h2>
+            <div class="admin-box">
+                <p>Profile ID: ROOT_USER</p>
+                <div class="admin-name">MA NHẬT TRƯỜNG</div>
+                <p>> Role: System Administrator</p>
+                <p>> Status: <span style="color: #fff;">[ ONLINE ]</span></p>
+                <p>> Clearance Level: GOD MODE</p>
+                <br>
+                <p style="font-style: italic; opacity: 0.8;">"Bảo mật chỉ là một ảo giác."</p>
+            </div>
+            <br>
+            <button onclick="showSection('menu')"><< Trở về hệ thống</button>
+        </div>
+
+        <div id="running" class="section">
+            <h2>> EXECUTING PROCESS...</h2>
+            <div id="terminal"></div>
+            <button onclick="stopHack()" style="margin-top: 20px; color: #ff3333; border-color: #ff3333;">[ NGẮT KẾT NỐI ]</button>
+        </div>
+    </div>
+
+    <script>
+        let intervalId;
+        
+        // Danh sách các dòng code ngẫu nhiên chuẩn bị in ra
+        const fakeCodes = [
+            "Bypassing firewall protocols...",
+            "Injecting SQL payload to database...",
+            "Extracting MD5 hashed passwords...",
+            "Establishing reverse shell connection...",
+            "Decrypting SSL/TLS traffic packets...",
+            "Accessing root directory [/var/www]...",
+            "Disabling system security daemons...",
+            "Uploading backdoor script to server...",
+            "Fetching user credentials and cookies...",
+            "Clearing system logs to hide tracks...",
+            "Connecting to botnet nodes...",
+            "Executing remote command [chmod 777]..."
+        ];
+
+        // Hàm chuyển đổi giữa các giao diện
+        function showSection(id) {
+            // Ẩn tất cả
+            document.querySelectorAll('.section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            // Hiện giao diện được chọn
+            document.getElementById(id).classList.add('active');
+        }
+
+        // Hàm bắt đầu chạy code ảo
+        function startHack() {
+            showSection('running');
+            const terminal = document.getElementById('terminal');
+            terminal.innerHTML = "> Khởi tạo tiến trình...\n<br>";
+            
+            // Cứ mỗi 600ms sẽ in ra 3 dòng code ngẫu nhiên
+            intervalId = setInterval(() => {
+                let logText = "";
+                for(let i = 0; i < 3; i++) {
+                    // Random một dòng chữ
+                    let randLine = fakeCodes[Math.floor(Math.random() * fakeCodes.length)];
+                    // Random một mã địa chỉ bộ nhớ hex ảo
+                    let randHex = "0x" + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+                    logText += `<span style="color:#888;">[${randHex}]</span> ${randLine}<br>`;
+                }
+                
+                terminal.innerHTML += logText + "<br>";
+                // Tự động cuộn xuống cuối terminal
+                terminal.scrollTop = terminal.scrollHeight;
+            }, 600);
+        }
+
+        // Hàm dừng chạy và quay lại menu
+        function stopHack() {
+            clearInterval(intervalId);
+            showSection('menu');
+        }
+    </script>
+</body>
+</html>
