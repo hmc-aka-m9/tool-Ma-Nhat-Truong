@@ -13,236 +13,267 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Tricker Hub">
     <link rel="apple-touch-icon" href="logo.png">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
+
     <style>
         :root {
             --neon-green: #0f0;
             --neon-pink: #ff00ff;
             --neon-blue: #00ffff;
             --neon-yellow: #ffff00;
+            --neon-red: #ff3333;
         }
+
         body {
-            background-color: #050505;
-            background-image: linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
-            background-size: 20px 20px;
-            color: var(--neon-green);
+            background-color: #000;
+            background-image: 
+                linear-gradient(rgba(0, 255, 0, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 0, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            color: white;
             font-family: 'Courier New', Courier, monospace;
             margin: 0;
+            height: 100vh;
             overflow: hidden;
-        }
-        /* Navbar */
-        .navbar {
-            background: rgba(0, 0, 0, 0.8);
-            border-bottom: 2px solid var(--neon-pink);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            box-shadow: 0 0 10px var(--neon-pink);
-        }
-        .navbar .logo { font-weight: bold; color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink); }
-        
-        /* Desktop Icons */
-        .desktop {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 80vh;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-        .icon {
-            width: 120px;
-            height: 120px;
-            border: 2px dashed;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+        }
+
+        /* Thanh Navbar chuẩn App */
+        .navbar {
+            padding: 15px 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 2px solid var(--neon-pink);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 15px var(--neon-pink);
+            z-index: 10;
+        }
+
+        .navbar img {
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid var(--neon-blue);
+        }
+
+        /* Màn hình chính (Desktop) */
+        .desktop {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 20px;
+            padding: 40px 20px;
+            justify-items: center;
+            align-content: start;
+        }
+
+        .app-icon {
+            display: flex;
+            flex-direction: column;
             align-items: center;
             cursor: pointer;
-            transition: 0.3s;
-            background: rgba(0,0,0,0.6);
+            transition: transform 0.2s;
         }
-        .icon:hover { transform: scale(1.1); }
+
+        .app-icon:active { transform: scale(0.9); }
+
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            border: 2px solid;
+            background: rgba(0,0,0,0.8);
+        }
+
+        /* Màu sắc từng icon */
         .icon-1 { border-color: var(--neon-blue); color: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
         .icon-2 { border-color: var(--neon-yellow); color: var(--neon-yellow); box-shadow: 0 0 15px var(--neon-yellow); }
         .icon-3 { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 15px var(--neon-green); }
 
         /* Window Modal */
         .window {
-            position: absolute;
+            position: fixed;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 90%; max-width: 500px;
+            width: 90%; max-width: 450px;
             background: #000;
             border: 2px solid;
             display: none;
             flex-direction: column;
-            box-shadow: 0 0 30px;
+            box-shadow: 0 0 40px rgba(0,0,0,1);
             z-index: 100;
+            border-radius: 8px;
         }
-        .window.active { display: flex; }
+
+        .window.active { display: flex; animation: openAnim 0.3s ease-out; }
+
+        @keyframes openAnim {
+            from { opacity: 0; transform: translate(-50%, -40%) scale(0.8); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
         .win-header {
-            padding: 10px;
+            padding: 12px;
             display: flex;
             justify-content: space-between;
+            background: rgba(255,255,255,0.05);
             border-bottom: 1px solid;
         }
-        .close-btn { cursor: pointer; font-weight: bold; }
-        .win-content { padding: 20px; }
-        
+
+        .win-content { padding: 25px; text-align: center; }
+
         /* Inputs & Buttons */
+        .guide-text { font-size: 13px; margin-bottom: 15px; color: #aaa; }
         input {
-            width: 90%; padding: 10px; margin-bottom: 15px;
-            background: #111; color: inherit; border: 1px solid;
+            width: 100%; padding: 12px; margin-bottom: 10px;
+            background: #111; color: white; border: 1px solid;
+            border-radius: 4px; box-sizing: border-box;
             font-family: inherit;
         }
-        button.action-btn {
-            padding: 10px 20px; background: transparent; color: inherit;
-            border: 1px solid; cursor: pointer; font-weight: bold; width: 100%;
+        .btn-start {
+            width: 100%; padding: 12px; background: transparent;
+            color: inherit; border: 1px solid; border-radius: 4px;
+            cursor: pointer; font-weight: bold; margin-top: 10px;
         }
-        button.action-btn:hover { background: rgba(255,255,255,0.1); }
 
-        /* Terminal */
+        /* Terminal Chạy Code */
         .terminal {
             height: 250px; overflow-y: auto; background: #000;
-            padding: 10px; border: 1px dotted; display: none;
-            text-align: left; font-size: 14px;
+            padding: 15px; border: 1px dashed; display: none;
+            text-align: left; font-size: 13px; line-height: 1.5;
         }
-        
-        /* Color themes for windows */
-        #win-func1 { border-color: var(--neon-blue); box-shadow: 0 0 20px var(--neon-blue); color: var(--neon-blue); }
-        #win-func1 .win-header { border-bottom-color: var(--neon-blue); }
-        #win-func1 input, #win-func1 button { border-color: var(--neon-blue); }
-        
-        #win-func2 { border-color: var(--neon-yellow); box-shadow: 0 0 20px var(--neon-yellow); color: var(--neon-yellow); }
-        #win-func2 .win-header { border-bottom-color: var(--neon-yellow); }
-        #win-func2 input, #win-func2 button { border-color: var(--neon-yellow); }
 
-        .admin-box { text-align: center; color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
+        /* Theme màu cho từng cửa sổ */
+        #win1 { border-color: var(--neon-blue); color: var(--neon-blue); }
+        #win2 { border-color: var(--neon-yellow); color: var(--neon-yellow); }
+        #win3 { border-color: var(--neon-green); color: var(--neon-green); }
     </style>
 </head>
 <body>
 
     <div class="navbar">
-        <div class="logo">CHIẾN TRICKER OS v2.0</div>
-        <div id="clock">00:00:00</div>
+        <div style="display: flex; align-items: center; gap: 10px;">
+            <img src="logo.png" alt="Logo">
+            <span style="color: var(--neon-pink); font-weight: bold; text-shadow: 0 0 5px var(--neon-pink);">TRICKER HUB</span>
+        </div>
+        <div id="clock">00:00</div>
     </div>
 
     <div class="desktop">
-        <div class="icon icon-1" onclick="openWin('win-func1')">
-            <h2 style="margin:0">01</h2><p>[ XÂM NHẬP ]</p>
+        <div class="app-icon" onclick="openWin('win1')">
+            <div class="icon-box icon-1">01</div>
+            <span>Xâm Nhập</span>
         </div>
-        <div class="icon icon-2" onclick="openWin('win-func2')">
-            <h2 style="margin:0">02</h2><p>[ TẤN CÔNG ]</p>
+        <div class="app-icon" onclick="openWin('win2')">
+            <div class="icon-box icon-2">02</div>
+            <span>Tấn Công</span>
         </div>
-        <div class="icon icon-3" onclick="openWin('win-func3')">
-            <h2 style="margin:0">03</h2><p>[ ADMIN ]</p>
+        <div class="app-icon" onclick="openWin('win3')">
+            <div class="icon-box icon-3">03</div>
+            <span>Admin</span>
         </div>
     </div>
 
-    <div id="win-func1" class="window">
-        <div class="win-header">
-            <span>MODULE_01: EXPLOIT</span>
-            <span class="close-btn" onclick="closeWin('win-func1')">X</span>
-        </div>
+    <div id="win1" class="window">
+        <div class="win-header"><span>MODULE 01</span> <span onclick="closeWin('win1')" style="cursor:pointer">✕</span></div>
         <div class="win-content">
-            <div id="form-1">
+            <div id="form1">
+                <p class="guide-text">Nhập Target, Proxy và Port để bắt đầu giải mã.</p>
                 <input type="text" placeholder="Target IP...">
+                <input type="text" placeholder="Proxy List...">
                 <input type="text" placeholder="Port...">
-                <input type="password" placeholder="Root Key...">
-                <button class="action-btn" onclick="runTerminal('term-1', 'form-1', linesFunc1)">BẮT ĐẦU</button>
+                <button class="btn-start" onclick="startProcess('term1', 'form1', 1)">BẮT ĐẦU</button>
             </div>
-            <div id="term-1" class="terminal" style="border-color: var(--neon-blue);"></div>
+            <div id="term1" class="terminal"></div>
         </div>
     </div>
 
-    <div id="win-func2" class="window">
-        <div class="win-header">
-            <span>MODULE_02: DDOS</span>
-            <span class="close-btn" onclick="closeWin('win-func2')">X</span>
-        </div>
+    <div id="win2" class="window">
+        <div class="win-header"><span>MODULE 02</span> <span onclick="closeWin('win2')" style="cursor:pointer">✕</span></div>
         <div class="win-content">
-            <div id="form-2">
+            <div id="form2">
+                <p class="guide-text">Cấu hình URL và số luồng để tấn công máy chủ.</p>
                 <input type="text" placeholder="Target URL...">
-                <input type="number" placeholder="Threads (e.g. 500)...">
-                <button class="action-btn" onclick="runTerminal('term-2', 'form-2', linesFunc2)">BẮT ĐẦU</button>
+                <input type="number" placeholder="Threads...">
+                <button class="btn-start" onclick="startProcess('term2', 'form2', 2)">BẮT ĐẦU</button>
             </div>
-            <div id="term-2" class="terminal" style="border-color: var(--neon-yellow);"></div>
+            <div id="term2" class="terminal"></div>
         </div>
     </div>
 
-    <div id="win-func3" class="window" style="border-color: var(--neon-green); box-shadow: 0 0 20px var(--neon-green);">
-        <div class="win-header" style="border-bottom-color: var(--neon-green); color: var(--neon-green);">
-            <span>SYSTEM_INFO</span>
-            <span class="close-btn" onclick="closeWin('win-func3')">X</span>
-        </div>
-        <div class="win-content admin-box">
-            <h1>MA NHẬT TRƯỜNG</h1>
-            <p>Role: System Owner</p>
-            <p>Level: God Mode</p>
-            <p>Status: ONLINE</p>
-            <hr style="border: 0; border-top: 1px dashed var(--neon-green); margin: 20px 0;">
-            <p style="font-size: 12px; opacity: 0.8;">Hệ thống được bảo vệ bởi Tricker Protocol.</p>
+    <div id="win3" class="window">
+        <div class="win-header"><span>ADMIN INFO</span> <span onclick="closeWin('win3')" style="cursor:pointer">✕</span></div>
+        <div class="win-content">
+            <div style="border: 1px solid var(--neon-green); padding: 20px; background: rgba(0,255,0,0.05);">
+                <h2 style="margin-top:0; text-shadow: 0 0 10px var(--neon-green);">MA NHẬT TRƯỜNG</h2>
+                <p>Status: <span style="color:white">[ ONLINE ]</span></p>
+                <p>Role: System Founder</p>
+                <p>Level: God Mode</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Đồng hồ
+        // Cập nhật đồng hồ
         setInterval(() => {
-            document.getElementById('clock').innerText = new Date().toLocaleTimeString('vi-VN');
+            const now = new Date();
+            document.getElementById('clock').innerText = now.getHours().toString().padStart(2, '0') + ":" + now.getMinutes().toString().padStart(2, '0');
         }, 1000);
 
-        // Data code chạy cho 2 chức năng
-        const linesFunc1 = [
-            ">> [SYSTEM] Đang giải mã module 01...",
-            ">> [EXPLOIT] Injecting payload v3.1...",
-            ">> [SUCCESS] Đã chiếm quyền điều khiển!"
-        ];
-        const linesFunc2 = [
-            ">> [DDOS] Khởi tạo 500 threads tấn công...",
-            ">> [NETWORK] Sending ACK/SYN flood...",
-            ">> [STATUS] Server mục tiêu đã sập!"
-        ];
+        // Code cố định cho từng chức năng (Bạn có thể thay đổi ở đây)
+        const codeLines = {
+            1: [
+                ">> [SYSTEM] Đang giải mã module 01...",
+                ">> [EXPLOIT] Injecting payload v3.1...",
+                ">> [SUCCESS] Đã chiếm quyền điều khiển!"
+            ],
+            2: [
+                ">> [DDOS] Khởi tạo 500 threads tấn công...",
+                ">> [NETWORK] Sending ACK/SYN flood...",
+                ">> [STATUS] Server mục tiêu đã sập!"
+            ]
+        };
 
-        let intervals = {};
+        let activeIntervals = {};
 
-        function openWin(id) {
-            document.getElementById(id).classList.add('active');
-        }
-
-        function closeWin(id) {
+        function openWin(id) { document.getElementById(id).classList.add('active'); }
+        
+        function closeWin(id) { 
             document.getElementById(id).classList.remove('active');
-            // Reset form khi đóng
-            if(id === 'win-func1') resetForm('form-1', 'term-1');
-            if(id === 'win-func2') resetForm('form-2', 'term-2');
+            // Reset về trạng thái ban đầu
+            const termId = id === 'win1' ? 'term1' : 'term2';
+            const formId = id === 'win1' ? 'form1' : 'form2';
+            if (activeIntervals[termId]) {
+                clearInterval(activeIntervals[termId]);
+                document.getElementById(formId).style.display = 'block';
+                document.getElementById(termId).style.display = 'none';
+                document.getElementById(termId).innerHTML = '';
+            }
         }
 
-        function resetForm(formId, termId) {
-            document.getElementById(formId).style.display = 'block';
-            document.getElementById(termId).style.display = 'none';
-            document.getElementById(termId).innerHTML = '';
-            if(intervals[termId]) clearInterval(intervals[termId]);
-        }
-
-        function runTerminal(termId, formId, linesArray) {
+        function startProcess(termId, formId, type) {
             document.getElementById(formId).style.display = 'none';
             const term = document.getElementById(termId);
             term.style.display = 'block';
-            term.innerHTML = "Khởi chạy tiến trình...<br><br>";
             
+            const lines = codeLines[type];
             let i = 0;
-            intervals[termId] = setInterval(() => {
-                term.innerHTML += linesArray[i] + "<br>";
+            
+            activeIntervals[termId] = setInterval(() => {
+                term.innerHTML += `<div style="margin-bottom:5px">${lines[i]}</div>`;
                 i++;
-                if(i >= linesArray.length) i = 0; // Lặp lại từ đầu
-                term.scrollTop = term.scrollHeight; // Cuộn xuống cuối
+                if (i >= lines.length) i = 0; // Lặp lại liên tục
+                term.scrollTop = term.scrollHeight;
             }, 1000);
         }
 
-        // Kích hoạt Service Worker để biến thành App PWA
+        // Đăng ký Service Worker cho PWA
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js');
         }
