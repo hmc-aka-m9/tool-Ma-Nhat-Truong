@@ -2,218 +2,247 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacker Tool - Coder: Ma Nhật Trường</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>CHIẾN TRICKER HUB</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Tricker Hub">
+    <link rel="apple-touch-icon" href="logo.png">
+
     <style>
-        /* CSS thiết kế giao diện chuẩn Hacker Lỏ */
+        :root {
+            --neon-green: #0f0;
+            --neon-pink: #ff00ff;
+            --neon-blue: #00ffff;
+            --neon-yellow: #ffff00;
+        }
         body {
             background-color: #050505;
-            color: #00ff00;
+            background-image: linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 255, 0, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: var(--neon-green);
             font-family: 'Courier New', Courier, monospace;
-            text-align: center;
             margin: 0;
-            padding: 20px;
-            overflow-x: hidden;
+            overflow: hidden;
         }
-        .container {
-            border: 2px solid #00ff00;
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
-            padding: 30px;
-            max-width: 600px;
-            margin: 40px auto;
-            background: rgba(0, 20, 0, 0.8);
-            border-radius: 5px;
+        /* Navbar */
+        .navbar {
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid var(--neon-pink);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: 0 0 10px var(--neon-pink);
         }
-        h1, h2 { 
-            text-shadow: 0 0 10px #00ff00; 
-            margin-bottom: 20px;
+        .navbar .logo { font-weight: bold; color: var(--neon-pink); text-shadow: 0 0 5px var(--neon-pink); }
+        
+        /* Desktop Icons */
+        .desktop {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            gap: 30px;
+            flex-wrap: wrap;
         }
-        p.guide {
-            color: #00cc00;
-            font-size: 14px;
-            margin-bottom: 20px;
-            border-bottom: 1px dashed #00ff00;
-            padding-bottom: 10px;
-        }
-        button {
-            background-color: #000;
-            color: #00ff00;
-            border: 1px solid #00ff00;
-            padding: 12px 25px;
-            margin: 10px;
-            font-size: 16px;
-            font-weight: bold;
+        .icon {
+            width: 120px;
+            height: 120px;
+            border: 2px dashed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             cursor: pointer;
-            font-family: 'Courier New', Courier, monospace;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
+            transition: 0.3s;
+            background: rgba(0,0,0,0.6);
         }
-        button:hover {
-            background-color: #00ff00;
-            color: #000;
-            box-shadow: 0 0 15px #00ff00;
-        }
-        input {
-            background-color: #000;
-            color: #00ff00;
-            border: 1px solid #00ff00;
-            padding: 10px;
-            margin: 8px 0;
-            width: 85%;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 15px;
-        }
-        input:focus { 
-            outline: none; 
-            box-shadow: 0 0 10px #00ff00; 
-            background-color: #0a1a0a;
-        }
-        
-        /* Ẩn hiện các chức năng */
-        .section { display: none; }
-        .active { display: block; animation: fadeIn 0.5s; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
+        .icon:hover { transform: scale(1.1); }
+        .icon-1 { border-color: var(--neon-blue); color: var(--neon-blue); box-shadow: 0 0 15px var(--neon-blue); }
+        .icon-2 { border-color: var(--neon-yellow); color: var(--neon-yellow); box-shadow: 0 0 15px var(--neon-yellow); }
+        .icon-3 { border-color: var(--neon-green); color: var(--neon-green); box-shadow: 0 0 15px var(--neon-green); }
 
-        /* Giao diện chạy code */
-        #terminal {
-            text-align: left;
+        /* Window Modal */
+        .window {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%; max-width: 500px;
             background: #000;
-            padding: 15px;
-            border: 1px dotted #00ff00;
-            height: 300px;
-            overflow-y: auto;
-            font-size: 13px;
-            box-shadow: inset 0 0 10px #00ff00;
+            border: 2px solid;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 0 30px;
+            z-index: 100;
+        }
+        .window.active { display: flex; }
+        .win-header {
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid;
+        }
+        .close-btn { cursor: pointer; font-weight: bold; }
+        .win-content { padding: 20px; }
+        
+        /* Inputs & Buttons */
+        input {
+            width: 90%; padding: 10px; margin-bottom: 15px;
+            background: #111; color: inherit; border: 1px solid;
+            font-family: inherit;
+        }
+        button.action-btn {
+            padding: 10px 20px; background: transparent; color: inherit;
+            border: 1px solid; cursor: pointer; font-weight: bold; width: 100%;
+        }
+        button.action-btn:hover { background: rgba(255,255,255,0.1); }
+
+        /* Terminal */
+        .terminal {
+            height: 250px; overflow-y: auto; background: #000;
+            padding: 10px; border: 1px dotted; display: none;
+            text-align: left; font-size: 14px;
         }
         
-        /* Bảng Admin */
-        .admin-box {
-            border: 1px dashed #00ff00;
-            padding: 20px;
-            margin-top: 20px;
-            background: rgba(0, 255, 0, 0.05);
-        }
-        .admin-name {
-            color: #fff; 
-            text-shadow: 0 0 10px #fff, 0 0 20px #00ff00;
-            font-size: 24px;
-            font-weight: bold;
-            margin: 10px 0;
-        }
+        /* Color themes for windows */
+        #win-func1 { border-color: var(--neon-blue); box-shadow: 0 0 20px var(--neon-blue); color: var(--neon-blue); }
+        #win-func1 .win-header { border-bottom-color: var(--neon-blue); }
+        #win-func1 input, #win-func1 button { border-color: var(--neon-blue); }
+        
+        #win-func2 { border-color: var(--neon-yellow); box-shadow: 0 0 20px var(--neon-yellow); color: var(--neon-yellow); }
+        #win-func2 .win-header { border-bottom-color: var(--neon-yellow); }
+        #win-func2 input, #win-func2 button { border-color: var(--neon-yellow); }
+
+        .admin-box { text-align: center; color: var(--neon-green); text-shadow: 0 0 10px var(--neon-green); }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div id="menu" class="section active">
-            <h1>[ ROOT TERMINAL ]</h1>
-            <p>> Lựa chọn module để thực thi:</p>
-            <button onclick="showSection('func1')">Chức năng 1</button><br>
-            <button onclick="showSection('func2')">Chức năng 2</button><br>
-            <button onclick="showSection('func3')">Thông tin Admin</button>
-        </div>
+    <div class="navbar">
+        <div class="logo">CHIẾN TRICKER OS v2.0</div>
+        <div id="clock">00:00:00</div>
+    </div>
 
-        <div id="func1" class="section">
-            <h2>> MODULE 01</h2>
-            <p class="guide">Hướng dẫn: Nhập địa chỉ mục tiêu, cổng kết nối và mã khóa để tiến hành xâm nhập hệ thống.</p>
-            <input type="text" placeholder="Nhập Target IP / ID..."><br>
-            <input type="text" placeholder="Nhập Port / Payload..."><br>
-            <input type="text" placeholder="Nhập Token ẩn danh..."><br>
-            <button onclick="startHack()">[ BẮT ĐẦU CHẠY ]</button><br>
-            <button onclick="showSection('menu')" style="font-size: 12px; padding: 5px 10px;"><< Quay lại</button>
+    <div class="desktop">
+        <div class="icon icon-1" onclick="openWin('win-func1')">
+            <h2 style="margin:0">01</h2><p>[ XÂM NHẬP ]</p>
         </div>
-
-        <div id="func2" class="section">
-            <h2>> MODULE 02</h2>
-            <p class="guide">Hướng dẫn: Cấu hình luồng tấn công từ chối dịch vụ (DDoS) vào máy chủ mục tiêu.</p>
-            <input type="text" placeholder="Nhập URL Target..."><br>
-            <input type="text" placeholder="Nhập số lượng Threads..."><br>
-            <button onclick="startHack()">[ BẮT ĐẦU CHẠY ]</button><br>
-            <button onclick="showSection('menu')" style="font-size: 12px; padding: 5px 10px;"><< Quay lại</button>
+        <div class="icon icon-2" onclick="openWin('win-func2')">
+            <h2 style="margin:0">02</h2><p>[ TẤN CÔNG ]</p>
         </div>
+        <div class="icon icon-3" onclick="openWin('win-func3')">
+            <h2 style="margin:0">03</h2><p>[ ADMIN ]</p>
+        </div>
+    </div>
 
-        <div id="func3" class="section">
-            <h2>> SYSTEM ADMIN</h2>
-            <div class="admin-box">
-                <p>Profile ID: ROOT_USER</p>
-                <div class="admin-name">MA NHẬT TRƯỜNG</div>
-                <p>> Role: System Administrator</p>
-                <p>> Status: <span style="color: #fff;">[ ONLINE ]</span></p>
-                <p>> Clearance Level: GOD MODE</p>
-                <br>
-                <p style="font-style: italic; opacity: 0.8;">"Bảo mật chỉ là một ảo giác."</p>
+    <div id="win-func1" class="window">
+        <div class="win-header">
+            <span>MODULE_01: EXPLOIT</span>
+            <span class="close-btn" onclick="closeWin('win-func1')">X</span>
+        </div>
+        <div class="win-content">
+            <div id="form-1">
+                <input type="text" placeholder="Target IP...">
+                <input type="text" placeholder="Port...">
+                <input type="password" placeholder="Root Key...">
+                <button class="action-btn" onclick="runTerminal('term-1', 'form-1', linesFunc1)">BẮT ĐẦU</button>
             </div>
-            <br>
-            <button onclick="showSection('menu')"><< Trở về hệ thống</button>
+            <div id="term-1" class="terminal" style="border-color: var(--neon-blue);"></div>
         </div>
+    </div>
 
-        <div id="running" class="section">
-            <h2>> EXECUTING PROCESS...</h2>
-            <div id="terminal"></div>
-            <button onclick="stopHack()" style="margin-top: 20px; color: #ff3333; border-color: #ff3333;">[ NGẮT KẾT NỐI ]</button>
+    <div id="win-func2" class="window">
+        <div class="win-header">
+            <span>MODULE_02: DDOS</span>
+            <span class="close-btn" onclick="closeWin('win-func2')">X</span>
+        </div>
+        <div class="win-content">
+            <div id="form-2">
+                <input type="text" placeholder="Target URL...">
+                <input type="number" placeholder="Threads (e.g. 500)...">
+                <button class="action-btn" onclick="runTerminal('term-2', 'form-2', linesFunc2)">BẮT ĐẦU</button>
+            </div>
+            <div id="term-2" class="terminal" style="border-color: var(--neon-yellow);"></div>
+        </div>
+    </div>
+
+    <div id="win-func3" class="window" style="border-color: var(--neon-green); box-shadow: 0 0 20px var(--neon-green);">
+        <div class="win-header" style="border-bottom-color: var(--neon-green); color: var(--neon-green);">
+            <span>SYSTEM_INFO</span>
+            <span class="close-btn" onclick="closeWin('win-func3')">X</span>
+        </div>
+        <div class="win-content admin-box">
+            <h1>MA NHẬT TRƯỜNG</h1>
+            <p>Role: System Owner</p>
+            <p>Level: God Mode</p>
+            <p>Status: ONLINE</p>
+            <hr style="border: 0; border-top: 1px dashed var(--neon-green); margin: 20px 0;">
+            <p style="font-size: 12px; opacity: 0.8;">Hệ thống được bảo vệ bởi Tricker Protocol.</p>
         </div>
     </div>
 
     <script>
-        let intervalId;
-        
-        // Danh sách các dòng code ngẫu nhiên chuẩn bị in ra
-        const fakeCodes = [
-            "Bypassing firewall protocols...",
-            "Injecting SQL payload to database...",
-            "Extracting MD5 hashed passwords...",
-            "Establishing reverse shell connection...",
-            "Decrypting SSL/TLS traffic packets...",
-            "Accessing root directory [/var/www]...",
-            "Disabling system security daemons...",
-            "Uploading backdoor script to server...",
-            "Fetching user credentials and cookies...",
-            "Clearing system logs to hide tracks...",
-            "Connecting to botnet nodes...",
-            "Executing remote command [chmod 777]..."
+        // Đồng hồ
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toLocaleTimeString('vi-VN');
+        }, 1000);
+
+        // Data code chạy cho 2 chức năng
+        const linesFunc1 = [
+            ">> [SYSTEM] Đang giải mã module 01...",
+            ">> [EXPLOIT] Injecting payload v3.1...",
+            ">> [SUCCESS] Đã chiếm quyền điều khiển!"
+        ];
+        const linesFunc2 = [
+            ">> [DDOS] Khởi tạo 500 threads tấn công...",
+            ">> [NETWORK] Sending ACK/SYN flood...",
+            ">> [STATUS] Server mục tiêu đã sập!"
         ];
 
-        // Hàm chuyển đổi giữa các giao diện
-        function showSection(id) {
-            // Ẩn tất cả
-            document.querySelectorAll('.section').forEach(sec => {
-                sec.classList.remove('active');
-            });
-            // Hiện giao diện được chọn
+        let intervals = {};
+
+        function openWin(id) {
             document.getElementById(id).classList.add('active');
         }
 
-        // Hàm bắt đầu chạy code ảo
-        function startHack() {
-            showSection('running');
-            const terminal = document.getElementById('terminal');
-            terminal.innerHTML = "> Khởi tạo tiến trình...\n<br>";
-            
-            // Cứ mỗi 600ms sẽ in ra 3 dòng code ngẫu nhiên
-            intervalId = setInterval(() => {
-                let logText = "";
-                for(let i = 0; i < 3; i++) {
-                    // Random một dòng chữ
-                    let randLine = fakeCodes[Math.floor(Math.random() * fakeCodes.length)];
-                    // Random một mã địa chỉ bộ nhớ hex ảo
-                    let randHex = "0x" + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
-                    logText += `<span style="color:#888;">[${randHex}]</span> ${randLine}<br>`;
-                }
-                
-                terminal.innerHTML += logText + "<br>";
-                // Tự động cuộn xuống cuối terminal
-                terminal.scrollTop = terminal.scrollHeight;
-            }, 600);
+        function closeWin(id) {
+            document.getElementById(id).classList.remove('active');
+            // Reset form khi đóng
+            if(id === 'win-func1') resetForm('form-1', 'term-1');
+            if(id === 'win-func2') resetForm('form-2', 'term-2');
         }
 
-        // Hàm dừng chạy và quay lại menu
-        function stopHack() {
-            clearInterval(intervalId);
-            showSection('menu');
+        function resetForm(formId, termId) {
+            document.getElementById(formId).style.display = 'block';
+            document.getElementById(termId).style.display = 'none';
+            document.getElementById(termId).innerHTML = '';
+            if(intervals[termId]) clearInterval(intervals[termId]);
+        }
+
+        function runTerminal(termId, formId, linesArray) {
+            document.getElementById(formId).style.display = 'none';
+            const term = document.getElementById(termId);
+            term.style.display = 'block';
+            term.innerHTML = "Khởi chạy tiến trình...<br><br>";
+            
+            let i = 0;
+            intervals[termId] = setInterval(() => {
+                term.innerHTML += linesArray[i] + "<br>";
+                i++;
+                if(i >= linesArray.length) i = 0; // Lặp lại từ đầu
+                term.scrollTop = term.scrollHeight; // Cuộn xuống cuối
+            }, 1000);
+        }
+
+        // Kích hoạt Service Worker để biến thành App PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
         }
     </script>
 </body>
